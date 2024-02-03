@@ -1,6 +1,6 @@
 from TV_sales.constants import * # here iam importing everthing which is present in the constants->__init__.py file into inside the data_ingestion.ipynb
 from TV_sales.utils.common import read_yaml, create_directories # here iam importing the read_yaml, create_directories which are presenting inside the utils,common files into PROJECTML in which the file is data_ingestion.ipynb 
-from TV_sales.entity.config_entity import DataIngestionConfig 
+from TV_sales.entity.config_entity import DataIngestionConfig,DataValidationConfig,DataTransformationConfig,ModelTrainerConfig
 
 
 class ConfigurationManager:  # here iam creating class called ConfigurationManager
@@ -31,3 +31,54 @@ class ConfigurationManager:  # here iam creating class called ConfigurationManag
         )
 
         return data_ingestion_config
+    
+
+    def get_data_validation_config(self) -> DataValidationConfig:
+        config = self.config.data_validation  # after reading by config iam returning the root_dir,status_file etc one by one
+        schema = self.schema.COLUMNS
+
+        create_directories([config.root_dir])
+
+        data_validation_config = DataValidationConfig( # the above entity code is return type , and the below varaibles are getting return after reading by config varaible 
+            root_dir=config.root_dir, 
+            STATUS_FILE=config.STATUS_FILE,
+            unzip_data_dir = config.unzip_data_dir,
+            all_schema=schema,
+        )
+
+        return data_validation_config
+    
+
+
+    # only this part get changes in every step, only defining the get_data_transformation_config get changes according to which step we are performing like 01_data_ingestion,02_data_validation
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=config.root_dir,  # here iam returning these 2 varaibles by using this code 
+            data_path=config.data_path,
+        )
+
+        return data_transformation_config
+    
+
+    # this is part of code for the Model trainerConfig which helps us to return the configuration
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config = self.config.model_trainer   # here iam reading the schema, params 
+        schema =  self.schema.TARGET_COLUMN
+
+        create_directories([config.root_dir])
+        print("Artifacts folder of Model_trainer created successfully")
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=config.root_dir,
+            train_data_path = config.train_data_path,
+            test_data_path = config.test_data_path,
+            model_name = config.model_name,
+            target_column = schema.name # here from schema iam taking the name which i will return through target_column
+            
+        )
+
+        return model_trainer_config # here iam returning all variables from the configuration

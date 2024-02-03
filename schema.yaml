@@ -1,1 +1,8 @@
-a: b
+COLUMNS:
+COLUMNS: 
+  TV: float64
+  Radio: float64
+  Newspaper: float64
+  
+TARGET_COLUMN:
+  name: Sales

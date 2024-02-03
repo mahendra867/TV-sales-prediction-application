@@ -37,5 +37,15 @@ class ModelTrainerConfig:
 
 
 
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path  # this root_dir,test_data_path,model_path,metric_file_name are the variables takes from the model_evaluation configuration code part of config.yaml file 
+    test_data_path: Path
+    model_path: Path
+    metric_file_name: Path
+    target_column: str # this target column takes from schema.yaml file 
+    
+
+
 
 

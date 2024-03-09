@@ -33,11 +33,13 @@
         <form action="/predict" method="POST" class="row g-3">
             <div class="col-md-6">
                 <label for="TV" class="form-label">Enter TV Value:</label>
-                <input type="number" step="any" class="form-control" id="TV" name="TV" required>
+                <input type="number" step="any" class="form-control" id="TV" name="TV" min="0.7" max="276.4" required>
+                <small id="TVHelp" class="form-text text-muted">TV must be between 0.70 and 276.4.</small>
             </div>
             <div class="col-md-6">
                 <label for="Radio" class="form-label">Enter Radio Value:</label>
-                <input type="number" step="any" class="form-control" id="Radio" name="Radio" required>
+                <input type="number" step="any" class="form-control" id="Radio" name="Radio" min="0" max="49.6" required>
+                <small id="RadioHelp" class="form-text text-muted">Radio must be between 0 and 49.6.</small>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Predict</button>
